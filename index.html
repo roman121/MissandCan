@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Missionary and cannible</title>
+	<link rel="icon" type="image/png" href="icon.png">
+</head>
+<style type="text/css">
+#myspace{
+	border:0px;
+	margin-top: -460px;
+	margin-right: 15px;
+	position:absolute;
+	float: left;
+	width:200px;
+	border-radius: 5px;
+	border:2px solid #cccccc !important;
+
+}
+	div{
+		
+		border:3px !important;
+		padding:5px;
+		margin-left: 0px;
+		margin-right:0px;
+	}
+	
+	#left_side{
+	width: 130px;
+	margin-top:240px;
+	float:left;
+	border:3px !important;
+	}
+.center{
+	position:absolute;
+	border-radius:10px;
+	background-color:#cccccc;
+	opacity: 0.7;
+	margin-left:200px;
+	margin-top:100px;
+	width:250px
+}
+
+
+.buttonMenuYes{
+	border-radius:6px;
+	margin:auto;
+	text-align: center;
+	font-size: 20px;
+	width:80px;
+	padding: 20px;
+	border:1px solid #dddddd;
+	background-color: #aaaaaa
+}
+.buttonMenuYes:hover{
+	background-color: #00ff00;
+	color:#000000;
+}
+
+.buttonMenuNo{
+	border-radius:6px;
+	margin:auto;
+	text-align: center;
+	font-size: 20px;
+	width:80px;
+	padding: 20px;
+	border:1px solid #dddddd;
+	background-color: #aaaaaa
+}
+.buttonMenuNo:hover{
+	background-color: #ff0000;
+	color:#000000;
+}
+#onboat_side{
+		margin-top:300px !important;
+		margin-left:0px;
+		text-align: center;
+		margin: 0px; 
+		width: 110px;
+		float:left;
+		background-image:url('boat.gif');
+		background-repeat: no-repeat;
+		background-position: bottom;
+		height:80px;
+	border:3px !important;
+	}
+
+
+
+	#right_side{
+		margin-top:240px;
+		margin-right: 0px;
+		width:130px !important;
+		border:3px !important;
+	
+	}
+
+
+	*{
+		
+	}
+	#container{
+		background: url("land.gif");
+		width: 630px;
+		margin: auto;
+		height:470px;
+		border-radius: 25px;
+		box-shadow: 4px 4px 9px 5px #999999;
+		transition:all 1s ease;
+	}
+
+#container:hover{
+		background: url("land.gif");
+		width: 630px;
+		margin: auto;
+		height:470px;
+		border-radius: 25px;
+		box-shadow: 4px 4px 9px 5px #123123;
+		transition:all 1s ease;
+	}
+	
+
+	#M1,#M2,#M3{
+		height: 55px;
+		width:30px;
+		border:0px;
+		color:red;
+		font-size: 10px;
+		background: url("missionary.gif");
+	}
+
+	#C1,#C2,#C3{
+		height: 66px;
+		width:40px;
+		border:0px;
+		color:blue;
+		font-size: 10px;
+		background: url("cannible.gif");
+	}
+
+</style>
+<script type="text/javascript" src="jquery.min.js"></script>
+
+
+<script type="text/javascript">
+
+	array_boat = [] ;
+	array_left = ["C1","C2","C3","M1","M2","M3"];
+	array_right = ["0","0","0","0","0","0"];
+	position_of_boat = "left";
+
+function disableControl(side){
+
+if(side=="right"){
+		//alert("right side disabled");
+		for(j=0;j<6;j++){
+			myButton = array_right[j];
+			if(myButton=="0"){
+				//
+			}
+			else {
+				
+				document.getElementById(myButton).disabled=true;
+
+			}
+		}
+}
+
+else {
+		//	alert("left side disabled");
+				
+			for(j=0;j<6;j++){
+			myButton = array_left[j];
+			
+			if(myButton=="0"){
+				//
+			}
+			else {
+				
+				document.getElementById(myButton).disabled=true;
+			}
+		}
+
+	}
+}
+
+
+function enableControl(side){
+
+if(side=="right"){
+		//alert("right side enable");
+				
+		for(j=0;j<6;j++){
+			myButton = array_right[j];
+			if(myButton=="0"){
+				//
+			}
+			else {
+				document.getElementById(myButton).disabled=false;
+			}
+		}
+}
+
+else{
+		//	alert("left side enabled");
+				
+			for(j=0;j<6;j++){
+			myButton = array_left[j];
+			if(myButton=="0"){
+				//
+			}
+			else {
+				
+				document.getElementById(myButton).disabled=false;
+			}
+		}
+
+	}
+}
+
+
+
+
+
+function check(){
+	number_of_missionary_left=0; 
+	number_of_cannible_left=0; 
+	number_of_missionary_right=0; 
+	number_of_cannible_right=0; 
+
+	
+	for(i=0;i<6;i++){
+	
+				if(array_left[i]=="M1"||array_left[i]=="M2"||array_left[i]=="M3"){		
+						number_of_missionary_left++;
+						
+				}
+				
+				if(array_left[i]=="C1"||array_left[i]=="C2"||array_left[i]=="C3"){		
+						number_of_cannible_left++;
+						
+				}
+
+				if(array_right[i]=="M1"||array_right[i]=="M2"||array_right[i]=="M3"){
+					number_of_missionary_right++;
+				}
+
+				if(array_right[i]=="C1"||array_right[i]=="C2"||array_right[i]=="C3"){
+					number_of_cannible_right++;
+				}
+
+}
+
+position_of_boat_space = position_of_boat;
+
+space_on_right="("+number_of_cannible_left+","+number_of_missionary_left+",left)";
+space_on_left="("+number_of_cannible_right+","+number_of_missionary_right+",right)";
+if(position_of_boat_space=="right"){
+	document.getElementById("myspace").innerHTML+="<br>"+space_on_right;
+
+	position_of_boat_space="left";
+}
+
+else{
+	document.getElementById("myspace").innerHTML+="<br>"+space_on_left;
+
+	position_of_boat_space="right";
+}
+
+
+
+
+
+
+if(number_of_missionary_right=="0"){
+	//nothing to do here
+}
+else
+{
+	if ((number_of_cannible_right>number_of_missionary_right)){
+
+	$('Gameover').fadeIn();	
+	/*play = confirm("!! Game Over !!\n Play Again ??")
+	if(play == true)
+		location.reload(true);
+	else
+		$('#left_side').html("GameOver"); 
+*/}
+
+}
+if(number_of_missionary_left=="0"){
+//donot end game
+}
+else
+{
+	if ((number_of_cannible_left>number_of_missionary_left)){
+			$('#Gameover').fadeIn();
+/*	play = confirm("!! Game Over !!\n Play Again ??")
+	if(play == true)
+		location.reload(true);
+	else
+		$('#left_side').html("GameOver"); 
+*/
+
+}
+
+}
+
+if(number_of_missionary_left=="0"){
+	if(number_of_cannible_left=="0"){
+		$('#win').fadeIn();
+	}
+}
+
+/*if((number_of_missionary_right=="0")&&(number_of_missionary_left=="0")){//do nothing
+
+
+
+
+ }
+*/
+
+}
+
+function movetoboat(myitem){
+	
+	
+
+	number_on_boat=array_boat.length;
+
+	if(number_on_boat<2){
+		if(myitem=="M1"){
+			array_left[3] ="0";
+			con = "#"+myitem;
+			$(con).remove();
+			
+		}
+		else if(myitem=="M2"){
+			array_left[4] = "0";
+			con = "#"+myitem;
+			$(con).remove();
+			
+		}
+		else if(myitem=="M3"){
+			array_left[5] = "0";
+			con = "#"+myitem;
+			$(con).remove();
+		}
+		else if(myitem=="C1"){
+			array_left[0] = "0";
+			con = "#"+myitem;
+			$(con).remove();
+		}
+		else if(myitem=="C2"){
+			array_left[1] = "0";
+			con = "#"+myitem;
+			$(con).remove();
+		}
+		else if(myitem=="C3"){
+			array_left[2] = "0";
+			con = "#"+myitem;
+			$(con).remove();
+		}
+
+		
+		array_boat[number_on_boat]=myitem;
+		document.getElementById("onboat_side").innerHTML+="<button onclick='removefromboat(this.value)' value='"+myitem+"'id='"+myitem+"'>"+myitem+"</button>";
+	}
+	
+	else
+		{
+		
+			
+		$('#alert').fadeIn();
+		document.getElementById("alert").innerHTML="<center><h1>only 2 passenger allowed<br></center>";
+		$('#alert').fadeOut();
+		
+		}
+}
+
+
+
+
+
+function removefromboat(myitem){
+	//c1 m2
+	if(position_of_boat=="left"){
+				number_on_boat=array_boat.length;
+
+				position_of_myitem = array_boat.indexOf(myitem);
+
+				if(position_of_myitem==0){   
+							array_boat[0]=array_boat[1];
+				}
+
+				array_boat.pop();		
+
+
+				if(number_on_boat>0){
+					if(myitem=="M1"){
+						array_left[3] ="M1";
+						con = "#"+myitem;
+						$(con).remove();
+
+					}
+					else if(myitem=="M2"){
+						array_left[4] = "M2";
+						con = "#"+myitem;
+						$(con).remove();
+					}
+					else if(myitem=="M3"){
+						array_left[5] = "M3";
+						con = "#"+myitem;
+						$(con).remove();
+					}
+					else if(myitem=="C1"){
+						array_left[0] = "C1";
+						con = "#"+myitem;
+						$(con).remove();
+					}
+					else if(myitem=="C2"){
+						array_left[1] = "C2";
+						con = "#"+myitem;
+						$(con).remove();
+					}
+					else if(myitem=="C3"){
+						array_left[2] = "C3";
+						con = "#"+myitem;
+						$(con).remove();
+					}
+
+					
+					
+					document.getElementById("left_side").innerHTML+="<button onclick='movetoboat(this.value)' value='"+myitem+"'id='"+myitem+"'>"+myitem+"</button>";
+				}
+
+		}
+
+else{
+	number_on_boat=array_boat.length;
+
+				position_of_myitem = array_boat.indexOf(myitem);
+
+				if(position_of_myitem==0){   
+							array_boat[0]=array_boat[1];
+				}
+
+				array_boat.pop();		
+
+
+				if(number_on_boat>0){
+					if(myitem=="M1"){
+						array_right[3] ="M1";
+						con = "#"+myitem;
+						$(con).remove();
+
+					}
+					else if(myitem=="M2"){
+						array_right[4] = "M2";
+						con = "#"+myitem;
+						$(con).remove();
+					}
+					else if(myitem=="M3"){
+						array_right[5] = "M3";
+						con = "#"+myitem;
+						$(con).remove();
+					}
+					else if(myitem=="C1"){
+						array_right[0] = "C1";
+						con = "#"+myitem;
+						$(con).remove();
+					}
+					else if(myitem=="C2"){
+						array_right[1] = "C2";
+						con = "#"+myitem;
+						$(con).remove();
+					}
+					else if(myitem=="C3"){
+						array_right[2] = "C3";
+						con = "#"+myitem;
+						$(con).remove();
+					}
+
+					
+					
+					document.getElementById("right_side").innerHTML+="<button onclick='movetoboat(this.value)' value='"+myitem+"'id='"+myitem+"'>"+myitem+"</button>";
+				}
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+function  moveBoat(value){
+	
+	number_on_boat = array_boat.length;
+	if(position_of_boat=="left"){
+		
+							if(number_on_boat==0){
+							
+							$('#alert').fadeIn();
+							document.getElementById("alert").innerHTML="<center><h1>Boat require at least 1 driver</center></h1>";
+							$('#alert').fadeOut();
+							return 0;
+		
+							}
+							else if(number_on_boat==1){
+									
+
+										if(array_boat[0]=="M1"){
+											array_right[3] ="M1";
+											
+										}
+										else if(array_boat[0]=="M2"){
+											array_right[4] = "M2";
+											
+										}
+										else if(array_boat[0]=="M3"){
+											array_right[5] = "M3";
+											
+										}
+										else if(array_boat[0]=="C1"){
+											array_right[0] = "C1";
+											
+										}
+										else if(array_boat[0]=="C2"){
+											array_right[1] = "C2";
+											
+										}
+										else if(array_boat[0]=="C3"){
+											array_right[2] = "C3";
+											
+										}
+						
+										
+														
+										
+								
+											$("#onboat_side").animate({marginLeft:"180px"},"slow",function(){	
+										
+											con = "#"+array_boat[0];
+											$(con).remove();
+												
+											document.getElementById("right_side").innerHTML+="<button onclick='movetoboat(this.value)' value='"+array_boat[0]+"'id='"+array_boat[0]+"'>"+array_boat[0]+"</button>";
+													
+											array_boat.pop();
+											position_of_boat="right";
+											//$("#onboat_side").css({"margin-left":"180px","transition":"all 1s ease"})
+										}
+
+
+										);
+
+										}
+
+
+						
+								else {
+									
+											if(array_boat[0]=="M1"){
+												array_right[3] ="M1";
+												
+											}
+											else if(array_boat[0]=="M2"){
+												array_right[4] = "M2";
+												
+											}
+											else if(array_boat[0]=="M3"){
+												array_right[5] = "M3";
+												
+											}
+											else if(array_boat[0]=="C1"){
+												array_right[0] = "C1";
+												
+											}
+											else if(array_boat[0]=="C2"){
+												array_right[1] = "C2";
+												
+											}
+											else if(array_boat[0]=="C3"){
+												array_right[2] = "C3";
+												
+											}
+							
+											if(array_boat[1]=="M1"){
+												array_right[3] ="M1";
+												
+											}
+											else if(array_boat[1]=="M2"){
+												array_right[4] = "M2";
+												
+											}
+											else if(array_boat[1]=="M3"){
+												array_right[5] = "M3";
+												
+											}
+											else if(array_boat[1]=="C1"){
+												array_right[0] = "C1";
+												
+											}
+											else if(array_boat[1]=="C2"){
+												array_right[1] = "C2";
+												
+											}
+											else if(array_boat[1]=="C3"){
+												array_right[2] = "C3";
+												
+											}
+							
+
+											$("#onboat_side").animate({marginLeft:"180px"},"slow",function(){	
+										
+											con = "#"+array_boat[0];
+											$(con).remove();
+												
+											document.getElementById("right_side").innerHTML+="<button onclick='movetoboat(this.value)' value='"+array_boat[0]+"'id='"+array_boat[0]+"'>"+array_boat[0]+"</button>";
+													
+											con = "#"+array_boat[1];
+											$(con).remove();
+											document.getElementById("right_side").innerHTML+="<button onclick='movetoboat(this.value)' value='"+array_boat[1]+"'id='"+array_boat[1]+"'>"+array_boat[1]+"</button>";
+											array_boat.pop();
+											array_boat.pop();
+											position_of_boat="right";
+											//$("#onboat_side").css({"margin-left":"180px","transition":"all 1s ease"})
+										}
+
+
+										);
+										}
+				disableControl("left");
+				enableControl("right");
+											
+		}
+
+	//position in right 
+
+	else{
+		
+		
+							if(number_on_boat==0){
+								$('#alert').fadeIn();
+							document.getElementById("alert").innerHTML="<center><h1>Boat need atleast one driver<br></center>";
+							$('#alert').fadeOut();
+								return 0;
+							
+							}
+
+							else if(number_on_boat==1){
+
+
+										if(array_boat[0]=="M1"){
+											array_left[3] ="M1";
+											array_right[3]="0";
+											
+										}
+										else if(array_boat[0]=="M2"){
+											array_left[4] = "M2";
+											array_right[4]="0";
+										}
+										else if(array_boat[0]=="M3"){
+											array_left[5] = "M3";
+											array_right[5]="0";
+										}
+										else if(array_boat[0]=="C1"){
+											array_left[0] = "C1";
+											array_right[0]="0";
+										}
+										else if(array_boat[0]=="C2"){
+											array_left[1] = "C2";
+											array_right[1]="0";
+										}
+										else if(array_boat[0]=="C3"){
+											array_left[2] = "C3";
+											array_right[2]="0";
+										}
+
+
+											$("#onboat_side").animate({marginLeft:"0px"},"slow",function(){	
+										
+											con = "#"+array_boat[0];
+											$(con).remove();
+												
+											document.getElementById("left_side").innerHTML+="<button onclick='movetoboat(this.value)' value='"+array_boat[0]+"'id='"+array_boat[0]+"'>"+array_boat[0]+"</button>";
+									
+										array_boat.pop();
+										position_of_boat="left";
+									
+											//$("#onboat_side").css({"margin-left":"180px","transition":"all 1s ease"})
+										}
+
+
+										);
+
+										
+									
+									//$("#onboat_side").css({"margin-left":"00px","transition":"all 1s ease"});
+			}
+	
+						else if (number_on_boat==2){
+										
+										if(array_boat[0]=="M1"){
+											array_left[3] ="M1";
+											array_right[3]="0";
+										}
+										if(array_boat[0]=="M2"){
+											array_left[4] = "M2";
+											array_right[4]="0";
+										}
+									 	if(array_boat[0]=="M3"){
+											array_left[5] = "M3";
+											array_right[5]="0";
+										}
+										if(array_boat[0]=="C1"){
+											array_left[0] = "C1";
+											array_right[0]="0";
+											
+										}
+										if(array_boat[0]=="C2"){
+											array_left[1] = "C2";
+											array_right[1]="0";
+											
+										}
+										if(array_boat[0]=="C3"){
+											array_left[2] = "C3";
+											array_right[2]="0";
+
+
+											
+										}
+										else if(array_boat[1]=="M1"){
+											array_left[3] ="M1";
+											array_right[3]="0";	
+										}
+										else if(array_boat[1]=="M2"){
+											array_left[4] = "M2";
+											array_right[4]="0";	
+										}
+										else if(array_boat[1]=="M3"){
+											array_left[5] = "M3";
+											array_right[5]="0";	
+										}
+										else if(array_boat[1]=="C1"){
+											array_left[0] = "C1";
+											array_right[0]="0";
+										}
+										else if(array_boat[1]=="C2"){
+											array_left[1] = "C2";
+											array_right[1]="0";
+										}	
+										else if(array_boat[1]=="C3"){
+											array_left[2] = "C3";
+											array_right[2]="0";									
+										}
+	
+									$("#onboat_side").animate({marginLeft:"0px"},"slow",function(){
+											con = "#"+array_boat[0];
+									$(con).remove();
+										
+									document.getElementById("left_side").innerHTML+="<button onclick='movetoboat(this.value)' value='"+array_boat[0]+"'id='"+array_boat[0]+"'>"+array_boat[0]+"</button>";
+											
+									con = "#"+array_boat[1];
+									$(con).remove();
+									document.getElementById("left_side").innerHTML+="<button onclick='movetoboat(this.value)' value='"+array_boat[1]+"'id='"+array_boat[1]+"'>"+array_boat[1]+"</button>";
+									array_boat.pop();
+									array_boat.pop();
+									position_of_boat="left";
+									
+										
+									});	
+										
+									//$("#onboat_side").css({"margin-left":"00px","transition":"all 1s ease"});
+								}
+			disableControl("right");
+		enableControl("left");
+	
+		
+	}
+
+check();	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+<div id="container">
+<div  id="left_side">
+<button onclick="movetoboat(this.value);"  value="M1" id="M1">M1</button>
+<button onclick="movetoboat(this.value);"  value="M2" id="M2">M2</button>
+<button onclick="movetoboat(this.value);"  value="M3" id="M3">M3</button>
+<button onclick="movetoboat(this.value);"  value="C1" id="C1">C1</button>
+<button onclick="movetoboat(this.value);"  value="C2" id="C2">C2</button>
+<button onclick="movetoboat(this.value);"  value="C3" id="C3">C3</button>
+</div>
+
+
+<div  id="onboat_side" style="" ondblclick="moveBoat(this.value)">
+
+</div>
+
+
+
+<div id="right_side" style="float:right;">
+</div>
+
+<div id="win" class="center" style="">
+	<center><h1>Congratulation!!</h1>
+	<h3>Play Again ?</h3>
+	<input type="button" class="buttonMenuYes" value="Yes" onclick="location.reload(true);"/>
+	<input type="button" class="buttonMenuNo" value="No" onclick="$('#win').hide();$('Gameover').fadeIn();"/>
+	</center>
+	
+</div>
+
+<div id="Gameover" class="center" style="">
+	<center><h1>GameOver!!</h1>
+	<h3>Play Again ?</h3>
+	<input type="button" class="buttonMenuYes" value="Yes" onclick="location.reload(true);"/>
+	<input type="button" class="buttonMenuNo" value="No" onclick="$('#Gameover').hide();"/>
+	</center>
+	
+</div>
+<div id="alert" class="center" onclick="$('#alert').fadeOut();">
+
+</div>
+
+
+<body onload="$('#win').hide();$('#Gameover').hide();$('#alert').hide();">
+<div id="head" style="position:absolute; color:white;">LAB #1<br/> GAME DEVELOPED BY ROMAN PRAJAPATI</div>
+</body>
+</div>
+
+<div id="myspace" >space (CAN , MIS , Boat_Dir)</div>
+</html>
